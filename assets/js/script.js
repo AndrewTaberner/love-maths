@@ -44,7 +44,12 @@ function runGame(gameType) {
         displayMultiplyQuestion(num1, num2);
     } else if (gameType === "subtract" ) {
         displaySubtractQuestion(num1, num2);
-    } else {
+    } else if (gameType === "division") {
+        // For division, we need to ensure the numbers divide evenly
+        let product = num1 * num2;
+        displayDivideQuestion(product, num1);
+    }
+    else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}. Aborting!`;
     }
@@ -89,7 +94,10 @@ function calculateCorrectAnswer() {
         return [operand1 * operand2, "multiply"];
     } else if (operator === "-") {
         return [operand1 - operand2, "subtract"];
-    } else {
+    } else if (operator === "/") {
+        return [operand1 / operand2, "division"];
+    }
+    else {
         alert(`Unimplemented operator ${operator}`);
         throw `Unimplemented operator ${operator}. Aborting!`;
     }
@@ -138,4 +146,14 @@ function displayMultiplyQuestion(operand1, operand2) {
     document.getElementById('operand2').textContent = operand2;
     document.getElementById('operator').textContent = "x";
 
+}
+
+function displayDivideQuestion(operand1, operand2) {
+    // Ensure the larger number is first and division results in whole number
+    let dividend = Math.max(operand1, operand2);
+    let divisor = Math.min(operand1, operand2);
+    
+    document.getElementById('operand1').textContent = dividend;
+    document.getElementById('operand2').textContent = divisor;
+    document.getElementById('operator').textContent = "/";
 }
